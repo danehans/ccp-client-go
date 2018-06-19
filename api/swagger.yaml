@@ -1,0 +1,865 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "localhost:31453"
+host: "localhost:31453"
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /2/clusters:
+    get:
+      summary: "Get all clusters"
+      operationId: "getClusters"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Clusters found"
+          schema:
+            $ref: "#/definitions/types.Cluster"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "No cluster found"
+    post:
+      summary: "Create a cluster with the given specification"
+      operationId: "createCluster"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/types.Cluster"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "No response was specified"
+        201:
+          description: "Created cluster successfully"
+          schema:
+            $ref: "#/definitions/types.Cluster"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+  /2/clusters/{clusterID}/authz:
+    get:
+      summary: "List authorizations for a cluster"
+      operationId: "listClusterAuthz"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterID"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Record not found"
+    post:
+      summary: "Add authorization for a cluster"
+      operationId: "createClusterAuthz"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterID"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/api.AddAuthorization"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "No response was specified"
+        201:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/api.AddAuthorizationReply"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Record not found"
+  /2/clusters/{clusterID}/authz/{authID}:
+    delete:
+      summary: "Delete authorization for a cluster"
+      operationId: "deleteClusterAuthz"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterID"
+      - name: "authID"
+        in: "path"
+        description: "Authorization UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "AuthID"
+      responses:
+        200:
+          description: "No response was specified"
+        204:
+          description: "Description was not specified"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Record not found"
+  /2/clusters/{clusterName}:
+    get:
+      summary: "Get a cluster by name"
+      operationId: "getClusterByName"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterName"
+        in: "path"
+        description: "Cluster Name"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterName"
+      responses:
+        200:
+          description: "Cluster found"
+          schema:
+            $ref: "#/definitions/types.Cluster"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Cluster not found"
+  /2/clusters/{clusterUUID}:
+    put:
+      summary: "Update a cluster"
+      operationId: "updateCluster"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/types.Cluster"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "Cluster updated successfully"
+          schema:
+            $ref: "#/definitions/types.Cluster"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Cluster not found"
+    delete:
+      summary: "Delete a cluster"
+      operationId: "deleteCluster"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterUUID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUID"
+      responses:
+        200:
+          description: "No response was specified"
+        204:
+          description: "Deleted cluster successfully"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Cluster not found"
+    patch:
+      summary: "Patch a cluster"
+      operationId: "patchCluster"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/types.Cluster"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "Cluster patched successfully"
+          schema:
+            $ref: "#/definitions/types.Cluster"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Cluster not found"
+  /2/clusters/{clusterUUID}/dashboard:
+    get:
+      summary: "Get dashboard"
+      operationId: "getDashboard"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterUUID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUID"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Record not found"
+  /2/clusters/{clusterUUID}/env:
+    get:
+      summary: "Get cluster environment"
+      operationId: "getClusterEnv"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterUUID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUID"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Record not found"
+  /2/clusters/{clusterUUID}/health:
+    get:
+      summary: "Get health of cluster"
+      operationId: "clusterHealth"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterUUID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUID"
+      responses:
+        200:
+          description: "Cluster is healthy"
+          schema:
+            $ref: "#/definitions/types.ClusterHealth"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Cluster not found"
+  /2/clusters/{clusterUUID}/helmcharts:
+    get:
+      summary: "Get HelmCharts object for a given cluster"
+      operationId: "getHelmChartsByClusterUUID"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterUUD"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUD"
+      responses:
+        200:
+          description: "HelmCharts found"
+          schema:
+            $ref: "#/definitions/types.HelmChart"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "HelmCharts not found"
+    post:
+      summary: "Create a helmChart for cluster with the given specification"
+      operationId: "createHelmChart"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clusterUUID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUID"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/types.HelmChart"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "No response was specified"
+        201:
+          description: "Created helmChart successfully"
+          schema:
+            $ref: "#/definitions/types.HelmChart"
+        400:
+          description: "Bad request"
+        401:
+          description: "Unauthorized"
+  /2/clusters/{clusterUUID}/helmcharts/{HelmChartUUID}:
+    delete:
+      summary: "Delete helm chart for cluster"
+      operationId: "deleteHelmChart"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "HelmChartUUID"
+        in: "path"
+        description: "HelmChartUUID"
+        required: true
+        type: "string"
+        x-exportParamName: "HelmChartUUID"
+      - name: "clusterUUID"
+        in: "path"
+        description: "Cluster UUID"
+        required: true
+        type: "string"
+        x-exportParamName: "ClusterUUID"
+      responses:
+        200:
+          description: "No response was specified"
+        204:
+          description: "Deleted helm chart successfully"
+          schema:
+            $ref: "#/definitions/types.HelmChart"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "HelmChart not found"
+  /2/clusters/{clusterUUID}/upgrade:
+    patch:
+      summary: "Upgrade a cluster"
+      operationId: "upgradeCluster"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/types.Cluster"
+        x-exportParamName: "Body"
+      responses:
+        200:
+          description: "Cluster updated successfully"
+          schema:
+            $ref: "#/definitions/types.Cluster"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Cluster not found"
+definitions:
+  api.AddAuthorization:
+    required:
+    - "Local"
+    - "Name"
+    properties:
+      Local:
+        type: "boolean"
+      Name:
+        type: "string"
+  api.AddAuthorizationReply:
+    required:
+    - "AuthID"
+    - "Local"
+    - "Name"
+    properties:
+      AuthID:
+        type: "string"
+      Local:
+        type: "boolean"
+      Name:
+        type: "string"
+  types.Cluster:
+    required:
+    - "Infra"
+    - "aci_profile_uuid"
+    - "ccp_private_ssh_key"
+    - "ccp_public_ssh_key"
+    - "cluster_dashboard_url"
+    - "cluster_env_url"
+    - "deployer"
+    - "deployer_type"
+    - "description"
+    - "helm_charts"
+    - "ingress_vip_addr_id"
+    - "ingress_vip_pool_id"
+    - "ingress_vips"
+    - "is_adopt"
+    - "is_control_cluster"
+    - "keepalived_vrid"
+    - "kubernetes_version"
+    - "labels"
+    - "master_mac_addresses"
+    - "master_vip"
+    - "master_vip_addr_id"
+    - "masters"
+    - "name"
+    - "network_plugin"
+    - "nodes"
+    - "ntp_pools"
+    - "ntp_servers"
+    - "provider_client_config_uuid"
+    - "registries_insecure"
+    - "registries_root_ca"
+    - "registries_self_signed"
+    - "ssh_key"
+    - "ssh_password"
+    - "ssh_user"
+    - "state"
+    - "template"
+    - "type"
+    - "uuid"
+    - "workers"
+    properties:
+      Infra:
+        $ref: "#/definitions/types.Cluster.Infra"
+      aci_profile_uuid:
+        type: "string"
+      ccp_private_ssh_key:
+        type: "string"
+      ccp_public_ssh_key:
+        type: "string"
+      cluster_dashboard_url:
+        type: "string"
+      cluster_env_url:
+        type: "string"
+      deployer:
+        $ref: "#/definitions/types.Kubeadm"
+      deployer_type:
+        type: "string"
+      description:
+        type: "string"
+      helm_charts:
+        type: "array"
+        items:
+          $ref: "#/definitions/types.HelmChart"
+      ingress_vip_addr_id:
+        type: "string"
+      ingress_vip_pool_id:
+        type: "string"
+      ingress_vips:
+        type: "array"
+        items:
+          type: "string"
+      is_adopt:
+        type: "boolean"
+      is_control_cluster:
+        type: "boolean"
+      keepalived_vrid:
+        type: "integer"
+        format: "byte"
+      kubernetes_version:
+        type: "string"
+      labels:
+        type: "array"
+        items:
+          $ref: "#/definitions/types.Label"
+      master_mac_addresses:
+        type: "array"
+        items:
+          type: "string"
+      master_vip:
+        type: "string"
+      master_vip_addr_id:
+        type: "string"
+      masters:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      network_plugin:
+        $ref: "#/definitions/types.NetworkPluginProfile"
+      nodes:
+        type: "array"
+        items:
+          $ref: "#/definitions/types.Node"
+      ntp_pools:
+        type: "array"
+        items:
+          type: "string"
+      ntp_servers:
+        type: "array"
+        items:
+          type: "string"
+      provider_client_config_uuid:
+        type: "string"
+      registries_insecure:
+        type: "array"
+        items:
+          type: "string"
+      registries_root_ca:
+        type: "array"
+        items:
+          type: "string"
+      registries_self_signed:
+        type: "array"
+        items:
+          type: "string"
+      ssh_key:
+        type: "string"
+      ssh_password:
+        type: "string"
+      ssh_user:
+        type: "string"
+      state:
+        type: "string"
+      template:
+        type: "string"
+      type:
+        $ref: "#/definitions/types.ClusterType"
+      uuid:
+        type: "string"
+      workers:
+        type: "integer"
+        format: "int32"
+    example:
+      registries_insecure:
+      - "registries_insecure"
+      - "registries_insecure"
+      ingress_vip_addr_id: "ingress_vip_addr_id"
+      cluster_env_url: "cluster_env_url"
+      ccp_public_ssh_key: "ccp_public_ssh_key"
+      registries_root_ca:
+      - "registries_root_ca"
+      - "registries_root_ca"
+      is_control_cluster: true
+      master_vip_addr_id: "master_vip_addr_id"
+      state: "state"
+      registries_self_signed:
+      - "registries_self_signed"
+      - "registries_self_signed"
+      provider_client_config_uuid: "provider_client_config_uuid"
+      workers: 5
+      type: ""
+      ssh_user: "ssh_user"
+      Infra: {}
+      description: "description"
+      is_adopt: true
+      name: "name"
+      ingress_vip_pool_id: "ingress_vip_pool_id"
+      deployer:
+        provider_type: "provider_type"
+        provider:
+          vsphere_datastore: "vsphere_datastore"
+          vsphere_datacenter: "vsphere_datacenter"
+          vsphere_working_dir: "vsphere_working_dir"
+          vsphere_scsi_controller_type: "vsphere_scsi_controller_type"
+          vsphere_client_config_uuid: "vsphere_client_config_uuid"
+          client_config;omitempty:
+            port: 0
+            username: "username"
+            password: "password"
+            ip: "ip"
+      ntp_pools:
+      - "ntp_pools"
+      - "ntp_pools"
+      master_mac_addresses:
+      - "master_mac_addresses"
+      - "master_mac_addresses"
+      template: "template"
+      ccp_private_ssh_key: "ccp_private_ssh_key"
+      keepalived_vrid: 6
+      ntp_servers:
+      - "ntp_servers"
+      - "ntp_servers"
+      deployer_type: "deployer_type"
+      labels:
+      - value: "value"
+        key: "key"
+      - value: "value"
+        key: "key"
+      kubernetes_version: "kubernetes_version"
+      master_vip: "master_vip"
+      ingress_vips:
+      - "ingress_vips"
+      - "ingress_vips"
+      helm_charts:
+      - name: "name"
+        cluster_UUID: "cluster_UUID"
+        chart_url: "chart_url"
+        helmchart_uuid: "helmchart_uuid"
+        options: "options"
+      - name: "name"
+        cluster_UUID: "cluster_UUID"
+        chart_url: "chart_url"
+        helmchart_uuid: "helmchart_uuid"
+        options: "options"
+      network_plugin:
+        details: "details"
+        status: "status"
+        name: "name"
+      nodes:
+      - template: "template"
+        cloud_init_data: "cloud_init_data"
+        private_ip: "private_ip"
+        mac_addresses:
+        - "mac_addresses"
+        - "mac_addresses"
+        is_master: true
+        error_log: "error_log"
+        public_ip: "public_ip"
+        name: "name"
+        state: "state"
+        kubernetes_version: "kubernetes_version"
+        uuid: "uuid"
+      - template: "template"
+        cloud_init_data: "cloud_init_data"
+        private_ip: "private_ip"
+        mac_addresses:
+        - "mac_addresses"
+        - "mac_addresses"
+        is_master: true
+        error_log: "error_log"
+        public_ip: "public_ip"
+        name: "name"
+        state: "state"
+        kubernetes_version: "kubernetes_version"
+        uuid: "uuid"
+      cluster_dashboard_url: "cluster_dashboard_url"
+      aci_profile_uuid: "aci_profile_uuid"
+      uuid: "uuid"
+      ssh_password: "ssh_password"
+      masters: 1
+      ssh_key: "ssh_key"
+  types.Cluster.Infra: {}
+  types.ClusterHealth:
+    required:
+    - "cluster_health_status"
+    properties:
+      cluster_health_status:
+        type: "string"
+    example:
+      cluster_health_status: "cluster_health_status"
+  types.HelmChart:
+    required:
+    - "chart_url"
+    - "cluster_UUID"
+    - "helmchart_uuid"
+    - "name"
+    - "options"
+    properties:
+      chart_url:
+        type: "string"
+      cluster_UUID:
+        type: "string"
+      helmchart_uuid:
+        type: "string"
+      name:
+        type: "string"
+      options:
+        type: "string"
+    example:
+      name: "name"
+      cluster_UUID: "cluster_UUID"
+      chart_url: "chart_url"
+      helmchart_uuid: "helmchart_uuid"
+      options: "options"
+  types.Kubeadm:
+    required:
+    - "provider"
+    - "provider_type"
+    properties:
+      provider:
+        $ref: "#/definitions/types.VsphereCloudProvider"
+      provider_type:
+        type: "string"
+    example:
+      provider_type: "provider_type"
+      provider:
+        vsphere_datastore: "vsphere_datastore"
+        vsphere_datacenter: "vsphere_datacenter"
+        vsphere_working_dir: "vsphere_working_dir"
+        vsphere_scsi_controller_type: "vsphere_scsi_controller_type"
+        vsphere_client_config_uuid: "vsphere_client_config_uuid"
+        client_config;omitempty:
+          port: 0
+          username: "username"
+          password: "password"
+          ip: "ip"
+  types.Label:
+    required:
+    - "key"
+    - "value"
+    properties:
+      key:
+        type: "string"
+      value:
+        type: "string"
+    example:
+      value: "value"
+      key: "key"
+  types.NetworkPluginProfile:
+    required:
+    - "details"
+    - "name"
+    - "status"
+    properties:
+      details:
+        type: "string"
+      name:
+        type: "string"
+      status:
+        type: "string"
+    example:
+      details: "details"
+      status: "status"
+      name: "name"
+  types.Node:
+    required:
+    - "cloud_init_data"
+    - "error_log"
+    - "is_master"
+    - "kubernetes_version"
+    - "mac_addresses"
+    - "name"
+    - "private_ip"
+    - "public_ip"
+    - "state"
+    - "template"
+    - "uuid"
+    properties:
+      cloud_init_data:
+        type: "string"
+      error_log:
+        type: "string"
+      is_master:
+        type: "boolean"
+      kubernetes_version:
+        type: "string"
+      mac_addresses:
+        type: "array"
+        items:
+          type: "string"
+      name:
+        type: "string"
+      private_ip:
+        type: "string"
+      public_ip:
+        type: "string"
+      state:
+        type: "string"
+      template:
+        type: "string"
+      uuid:
+        type: "string"
+    example:
+      template: "template"
+      cloud_init_data: "cloud_init_data"
+      private_ip: "private_ip"
+      mac_addresses:
+      - "mac_addresses"
+      - "mac_addresses"
+      is_master: true
+      error_log: "error_log"
+      public_ip: "public_ip"
+      name: "name"
+      state: "state"
+      kubernetes_version: "kubernetes_version"
+      uuid: "uuid"
+  types.VsphereClientConfig:
+    required:
+    - "ip"
+    - "port"
+    - "username"
+    properties:
+      ip:
+        type: "string"
+      password:
+        type: "string"
+      port:
+        type: "integer"
+      username:
+        type: "string"
+    example:
+      port: 0
+      username: "username"
+      password: "password"
+      ip: "ip"
+  types.VsphereCloudProvider:
+    required:
+    - "client_config;omitempty"
+    - "vsphere_client_config_uuid"
+    - "vsphere_datacenter"
+    - "vsphere_datastore"
+    - "vsphere_scsi_controller_type"
+    - "vsphere_working_dir"
+    properties:
+      client_config;omitempty:
+        $ref: "#/definitions/types.VsphereClientConfig"
+      vsphere_client_config_uuid:
+        type: "string"
+      vsphere_datacenter:
+        type: "string"
+      vsphere_datastore:
+        type: "string"
+      vsphere_scsi_controller_type:
+        type: "string"
+      vsphere_working_dir:
+        type: "string"
+    example:
+      vsphere_datastore: "vsphere_datastore"
+      vsphere_datacenter: "vsphere_datacenter"
+      vsphere_working_dir: "vsphere_working_dir"
+      vsphere_scsi_controller_type: "vsphere_scsi_controller_type"
+      vsphere_client_config_uuid: "vsphere_client_config_uuid"
+      client_config;omitempty:
+        port: 0
+        username: "username"
+        password: "password"
+        ip: "ip"
